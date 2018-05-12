@@ -1,0 +1,15 @@
+begin
+	declare
+		n: natural, v: string, b: boolean;
+		%% Hey, this is a comment
+
+		n:= 5;
+		b:= true;
+		if b then
+			b:= false;
+			n:= 1
+		else
+			v:= "test" || "_1";
+			b:= true & false | true
+		fi
+end

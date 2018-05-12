@@ -1,0 +1,23 @@
+begin
+	declare
+		a: boolean, b: boolean, c: boolean,
+		x: natural, y:natural, z:natural;
+		
+		x:=0; y:=x; z:=x;
+		a:= true;
+		b:= a;
+		c:= false;
+		while a == b do
+			x:= x + 2;
+			if b then
+				c:= (c&false)|a;
+				b:= x>z				
+			else
+				a:= !(z<=y) == b&c;
+				c:= !c|true;
+				z:= z - 3
+			fi;
+			b:=false
+		od;
+		y:= (y-(x+z)+z)-x
+end
