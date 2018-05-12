@@ -22,7 +22,7 @@ lexical WhitespaceAndComment
    ;
 
 start syntax Program 
-   = program: "begin" Declarations decls {Statement  ";"}* body "end" ;
+   = program: "begin" Declarations decls {(SimpleStatement|ComplexStatement)  ";"}* body "end" ;
 
 syntax Declarations 
    = "declare" {Declaration ","}* decls ";" ;  
@@ -35,16 +35,18 @@ syntax Type
    | boolean:"boolean"
    ;
 
-syntax Statement 
-   = asgStat: Id var ":="  Expression val 
-   | ifElseStat: "if" Expression cond "then" {Statement ";"}*  thenPart "else" {Statement ";"}* elsePart "fi"
-   | whileStat: "while" Expression cond "do" {Statement ";"}* body "od"
- //  | forStat: "for" Id loopvar ":=" Natural "to" Natural "do" {Statement ";"}* body "rof"
-   |forStat: "for" Id loopvar ":=" Natural ";" Expression ";" Expression "do" {Statement ";"}* body "rof"
+syntax SimpleStatement = asgStat: Id var ":="  Expression val;
+syntax ComplexStatement 
+   = ifElseStat: "if" Expression cond "then" {(SimpleStatement|ComplexStatement) ";"}*  thenPart "else" {(SimpleStatement|ComplexStatement) ";"}* elsePart "fi"
+   | whileStat: "while" Expression cond "do" {(SimpleStatement|ComplexStatement) ";"}* body "od"
+ //  | forStat: "for" Id loopvar ":=" Natural "to" Natural "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
+ // |forStat: "for" Id loopvar ":=" Natural "," Expression "," (SimpleStatement|ComplexStatement) "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
+   |forStat: "for" SimpleStatement ";" Expression ";" SimpleStatement "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
   ;  
-  //should we enforce the syntax in such a way that only a valid subset of exressions is used? i.e. intro
-  //duce LogicalExpression. Applicable also at || operation. Should lhs and rhs be any possible expression (Natural,Logical) or only String?
      
+//should we enforce the syntax in such a way that only a valid subset of exressions is used? i.e. intro
+ //duce LogicalExpression. Applicable also at || operation. Should lhs and rhs be any possible expression (Natural,Logical) or only String?     
+
 syntax Expression 
    = id: Id name
    | strCon: String string
