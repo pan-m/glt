@@ -34,7 +34,7 @@ syntax Type
    | string :"string"
    | boolean:"boolean"
    ;
-   
+  
 /* We chose to split the original Statement symbol to Simple and Complex. The first contains just the assignment
    operation, whereas the second the rest of the statements. This was done to isolate the assignment from the other
    statements and construct a C-like for-loop which has roughly the following syntax: for assignment;expression;assignment do
@@ -45,7 +45,7 @@ syntax ComplexStatement
    | whileStat: "while" Expression cond "do" {(SimpleStatement|ComplexStatement) ";"}* body "od"
    |forStat: "for" "(" SimpleStatement ";" Expression ";" SimpleStatement ")" "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
   ;  
-
+  
 /* For the precedence of the operators we followed the common precedence found in language like C or Java:
    concatenation, arithetic operators, comparisons, (in)equality, logical operators
 */
