@@ -1,6 +1,6 @@
 begin
 	declare
-		n: natural, v: string, b: boolean;
+		n: natural, v: string, b: boolean, c: boolean;
 		%% Hey, this is a comment
 
 		n:= 5;
@@ -10,6 +10,7 @@ begin
 			n:= 1
 		else
 			v:= "test" || "_1";
-			b:= true & false | true
+			b:= true & false | true;
+			c:= (b & c) | (!b & !c)
 		fi
 end

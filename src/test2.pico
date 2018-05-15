@@ -13,9 +13,11 @@ begin
 				c:= (c&false)|a;
 				b:= x>z				
 			else
-				a:= !(z<=y) == b&c;
-				c:= !c|true;
-				z:= z - 3
+				for(x:=0;x<5;x:=x+1) do
+					a:= !(z<=y) == b&c;
+					c:= !c|true;
+					z:= z - 3
+				rof
 			fi;
 			b:=false
 		od;

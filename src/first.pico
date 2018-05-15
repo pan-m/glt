@@ -13,7 +13,7 @@ begin
 		else
 			n:=4
 		fi;
-		for n:= 4; n < 10; n:=n+10 do
+		for (n:= 4; n < 10; n:=n+1) do
 			x:=2
 		rof
 end

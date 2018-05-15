@@ -34,19 +34,21 @@ syntax Type
    | string :"string"
    | boolean:"boolean"
    ;
-
+   
+/* We chose to split the original Statement symbol to Simple and Complex. The first contains just the assignment
+   operation, whereas the second the rest of the statements. This was done to isolate the assignment from the other
+   statements and construct a C-like for-loop which has roughly the following syntax: for assignment;expression;assignment do
+*/
 syntax SimpleStatement = asgStat: Id var ":="  Expression val;
 syntax ComplexStatement 
    = ifElseStat: "if" Expression cond "then" {(SimpleStatement|ComplexStatement) ";"}*  thenPart "else" {(SimpleStatement|ComplexStatement) ";"}* elsePart "fi"
    | whileStat: "while" Expression cond "do" {(SimpleStatement|ComplexStatement) ";"}* body "od"
- //  | forStat: "for" Id loopvar ":=" Natural "to" Natural "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
- // |forStat: "for" Id loopvar ":=" Natural "," Expression "," (SimpleStatement|ComplexStatement) "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
-   |forStat: "for" SimpleStatement ";" Expression ";" SimpleStatement "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
+   |forStat: "for" "(" SimpleStatement ";" Expression ";" SimpleStatement ")" "do" {(SimpleStatement|ComplexStatement) ";"}* body "rof"
   ;  
-     
-//should we enforce the syntax in such a way that only a valid subset of exressions is used? i.e. intro
- //duce LogicalExpression. Applicable also at || operation. Should lhs and rhs be any possible expression (Natural,Logical) or only String?     
 
+/* For the precedence of the operators we followed the common precedence found in language like C or Java:
+   concatenation, arithetic operators, comparisons, (in)equality, logical operators
+*/
 syntax Expression 
    = id: Id name
    | strCon: String string
